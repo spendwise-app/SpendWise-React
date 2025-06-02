@@ -28,6 +28,10 @@
   color: var(--text-light);
   font-size: 0.95rem;
 }
+.expense-summary .link {
+  text-decoration: none;
+  color: inherit;
+}
 
 .expense-summary span {
   white-space: nowrap;

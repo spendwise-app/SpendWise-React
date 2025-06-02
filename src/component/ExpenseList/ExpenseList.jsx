@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useExpense from "../../store/useExpense";
 import "./expenseList.css";
 import useStore from "../../store/zustand";
+import { Link } from "react-router-dom";
 
 const ExpenseList = () => {
   const { expenses, total, fetchExpenses, deleteExpense, updateExpense } =
@@ -54,13 +55,15 @@ const ExpenseList = () => {
               {total}
             </b>
           </span>
-          <span>
+          <Link to="/profile" className="link">
+            <span>
             Daily Limit:{" "}
             <b className="dailylimit">
               {user.currency}
               {user.dailyLimit}
             </b>
           </span>
+          </Link>
           <span>
             Today's balance{" "}
             <b className={balance < 0 ? "red" : "green"}>
