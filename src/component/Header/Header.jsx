@@ -66,7 +66,7 @@ const Header = () => {
               <span className="material-symbols-outlined">person</span>
               Profile
             </NavLink>
-            <button onClick={logoutUser} className="nav-link logout">
+            <button onClick={()=>logoutUser(null)} className="nav-link logout">
               <span className="material-symbols-outlined">logout</span>
               Logout
             </button>

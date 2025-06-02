@@ -19,7 +19,7 @@ const useStore = create((set, get) => {
       localStorage.setItem("balance", Number(data))
     },
 
-    logoutUser: (msg = null) => {
+    logoutUser: (msg) => {
       API.post("/auth/logout")
         .then((res) => {
           toast.success(msg || res.data.message);

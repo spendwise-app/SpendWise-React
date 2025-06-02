@@ -19,7 +19,11 @@ const Login = () => {
     try {
       const res = await API.post("/auth/login", { email, password });
       setUser(res.data.user);
-      toast.success(res.data.message || "Login successful");
+      if(res.data.success){
+        toast.success(res.data.message || "Login successful");
+      }else{
+        toast.error(res.data.message || "Something went wrong")
+      }
       setEmail("");
       setPassword("");
       navigate("/");
