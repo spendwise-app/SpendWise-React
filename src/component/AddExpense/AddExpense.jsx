@@ -21,7 +21,7 @@ const AddExpense = () => {
 
     setIsLoading(true);
     try {
-      await addExpense({ title, amount, category });
+      await addExpense({ title, amount, category, date: Date.now() });
       toast.success("Expense added successfully!");
       setTitle("");
       setAmount("");

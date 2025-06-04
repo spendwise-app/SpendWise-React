@@ -1,10 +1,25 @@
+import { useEffect } from "react";
 import AddExpense from "../../component/AddExpense/AddExpense";
 import ExpenseList from "../../component/ExpenseList/ExpenseList";
 import Header from "../../component/Header/Header";
 
 import "./dashBoard.css";
+import API from "../../config/axios";
+import useStore from "../../store/zustand";
 
 const DashBoard = () => {
+
+  const { setUser } = useStore()
+
+  useEffect(()=>{
+    fetchUserData();
+  },[])
+
+  const fetchUserData = async () => {
+    await API.get("/user").then((res)=>{
+      setUser(res.data.user)
+    })
+  } 
   return (
     <div className="dashboard">
       <Header />
