@@ -2,7 +2,7 @@
     min-height: 100vh;
 }
 .dashboard .setion_1{
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
     padding: 0.5rem 0.2rem;
     display: flex;
     align-items: center;

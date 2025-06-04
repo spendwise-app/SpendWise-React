@@ -8,6 +8,8 @@ import GuestRoute from "./component/GuestRoute";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Profile from "./pages/Profile/Profile";
 import History from "./pages/History/History";
+import NotFound from "./pages/NotFound/NotFound";
+import NetworkStatus from "./component/NetworkStatus/NetworkStatus";
 
 const App = () => {
   return (
@@ -19,8 +21,10 @@ const App = () => {
         <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer autoClose={1500} />
+      <NetworkStatus />
     </>
   );
 };

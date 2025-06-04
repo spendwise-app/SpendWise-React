@@ -34,7 +34,7 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, #3b82f6 0%, #5b74e7 25%, #4361ee 50%, #3153eb 75%, #1c42eb 100%);
 }
 
 input[type="text"],
@@ -42,6 +42,6 @@ input:not([type="email"]):not([type="password"]) {
   text-transform: capitalize;
 }
 #root{
-  background-color: var(--primary-color);
+  background: transparent;
 }
 
