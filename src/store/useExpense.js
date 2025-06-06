@@ -71,13 +71,23 @@ const useExpense = create((set, get) => {
       setExpenses,
       setTotal,
       setGrouped,
-      setIsLoading
+      setIsLoading,
+      setCategories
     ) => {
       try {
         const res = await API.get(`/expenses/filter?${query.toString()}`);
         setExpenses(res.data.expenses);
         setTotal(res.data.total);
         setGrouped(res.data.grouped || null);
+        let flag = 0;
+        const categories = res.data.expenses.map(item =>{
+          item.category == "Other" && (flag = 1)
+          return item.category
+        })
+        const uniqueCategories = new Set(categories);
+        const addOther = [...uniqueCategories].filter(item => item !== "Other")
+        flag && addOther.push("Other")
+        setCategories(addOther);
       } catch (err) {
         console.error(err);
         toast.error("Failed to fetch expenses.");

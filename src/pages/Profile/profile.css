@@ -16,7 +16,7 @@
   color: var(--white);
 }
 
-.edit-btn-p, .save-btn, .cancel-btn {
+.edit-btn-p, .save-btn-p, .cancel-btn-p {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 500;
@@ -41,22 +41,22 @@
   margin-left: auto;
 }
 
-.save-btn {
+.save-btn-p {
   background-color: var(--success-color);
   color: white;
   border: none;
 }
 
-.save-btn:hover {
+.save-btn-p:hover {
   background-color: var(--success-hover);
 }
 
-.cancel-btn {
+.cancel-btn-p {
   background-color: var(--background);
   color: var(--text-color);
 }
 
-.cancel-btn:hover {
+.cancel-btn-p:hover {
   background-color: #e2e8f0;
 }
 
@@ -314,6 +314,54 @@ input:disabled + .slider {
   color: var(--primary-color);
   display: block;
   margin-bottom: 0.5rem;
+}
+
+.payment-section {
+  margin: 1.25rem 0;
+  background-color: var(--white);
+  border-radius: var(--radius);
+}
+
+.payment-section h3 {
+  margin: 0 0 0.75rem 0;
+  color: var(--text-color);
+}
+
+.payment-section input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--input-border);
+  border-radius: calc(var(--radius) - 4px);
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: border-color 0.2s ease;
+  max-width: 400PX;
+}
+
+.payment-section input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
+}
+
+.payment-section span {
+  display: block;
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--text-color);
+  transition: border-color 0.2s ease;
+  max-width: 400px;
+  cursor: not-allowed;  
+  opacity: 0.5; 
+}
+
+.payment-section span:empty::before {
+  content: "UPI id not set";
+  color: var(--text-light);
+  font-style: italic;
 }
 
 

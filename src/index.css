@@ -41,6 +41,11 @@ input[type="text"],
 input:not([type="email"]):not([type="password"]) {
   text-transform: capitalize;
 }
+
+#upiId{
+  text-transform: none;
+}
+
 #root{
   background: transparent;
 }

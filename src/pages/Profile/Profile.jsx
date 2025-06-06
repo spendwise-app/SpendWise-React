@@ -9,6 +9,7 @@ const Profile = () => {
   const { user, updateUser } = useStore();
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState(user?.name || "");
+  const [upiId, setUpiId] = useState(user?.upiId || "")
   const [weeklySummary, setWeeklySummary] = useState(user?.getSummary || false);
   const [currency, setCurrency] = useState(user?.currency);
   const [profilePic, setProfilePic] = useState(user?.profilePic || "");
@@ -43,7 +44,8 @@ const Profile = () => {
       name,
       getSummary: weeklySummary,
       dailyLimit: dailyLimit ? dailyLimit : 0,
-      currency
+      currency,
+      upiId
     });
     setLoading(false);
     setEditMode(false);
@@ -68,10 +70,10 @@ const Profile = () => {
           {/* <h1>Profile Settings</h1> */}
           {editMode ? (
             <div className="profile-actions">
-              <button className="cancel-btn" onClick={() => setEditMode(false)}>
+              <button className="cancel-btn-p" onClick={() => setEditMode(false)}>
                 Cancel
               </button>
-              <button disabled={loading} className="save-btn" onClick={handleSave}>
+              <button disabled={loading} className="save-btn-p" onClick={handleSave}>
                 {loading ? <ButtonLoader /> : "Save Changes"}
               </button>
             </div>
@@ -124,6 +126,23 @@ const Profile = () => {
               )}
               <p className="email">{user?.email}</p>
             </div>
+          </div>
+
+          <div className="payment-section">
+            <h3>UPI ID</h3>
+            {
+              editMode ? (
+                <input
+                    type="text"
+                    id="upiId"
+                    value={upiId}
+                    onChange={(e) => setUpiId(e.target.value)}
+                    placeholder="UPI id"
+                  />
+              ) : (
+                <span>{upiId ? upiId : "Not set"}</span>
+              )
+            }
           </div>
 
           <div className="preferences-section">

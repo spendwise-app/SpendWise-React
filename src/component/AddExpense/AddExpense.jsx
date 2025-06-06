@@ -10,8 +10,18 @@ const AddExpense = () => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sharedWith, setSharedWith] = useState([]);
+  const [shared, setShared] = useState(false);
   const { addExpense } = useExpense();
-  const { user } = useStore();
+  const { user, friends } = useStore();
+
+  const handleCheckboxChange = (friendId) => {
+    setSharedWith((prev) =>
+      prev.includes(friendId)
+        ? prev.filter((id) => id !== friendId)
+        : [...prev, friendId]
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,13 +29,31 @@ const AddExpense = () => {
       return toast.error("All fields are required");
     }
 
+    const totalAmount = parseFloat(amount);
+    const splitAmount =
+      sharedWith.length > 0
+        ? totalAmount / (sharedWith.length + 1)
+        : totalAmount;
+
+    const sharedWithData = sharedWith.map((friendId) => ({
+      friend: friendId,
+      amount: Math.ceil(splitAmount),
+    }));
+
     setIsLoading(true);
     try {
-      await addExpense({ title, amount, category, date: Date.now() });
+      await addExpense({
+        title,
+        amount: totalAmount,
+        category,
+        date: Date.now(),
+        sharedWith: sharedWithData,
+      });
       toast.success("Expense added successfully!");
       setTitle("");
       setAmount("");
       setCategory("");
+      setSharedWith([]);
     } catch (error) {
       toast.error("Failed to add expense");
     } finally {
@@ -54,7 +82,7 @@ const AddExpense = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="amount">Amount {`(${user.currency})`}</label>
+          <label htmlFor="amount">Amount ({user.currency})</label>
           <div className="amount-input">
             <span className="currency">{user.currency}</span>
             <input
@@ -93,6 +121,50 @@ const AddExpense = () => {
             </div>
           </div>
         </div>
+        <div className="share-toggle-container">
+          <label htmlFor="sharetofriend" className="share-toggle-label">
+            Share with friends
+          
+          </label>
+          <input
+            id="sharetofriend"
+            type="checkbox"
+            className="share-toggle-input"
+            onChange={() => setShared((prev) => !prev)}
+            checked={shared}
+            hidden
+          />
+            <span onClick={() => setShared((prev) => !prev)} className="slide"></span>
+        </div>
+        {shared && (
+          <div className="friend-split-container">
+            <label className="friend-split-title">Split with Friends</label>
+            <div className="friend-split-list">
+              {friends?.length > 0 ? (
+                friends.map((friend) => (
+                  <label key={friend._id} className="friend-split-option">
+                    <input
+                      type="checkbox"
+                      className="friend-split-checkbox"
+                      checked={sharedWith.includes(friend._id)}
+                      onChange={() => handleCheckboxChange(friend._id)}
+                    />
+                    <span className="friend-split-info">
+                      {friend.name}{" "}
+                      <span className="friend-split-email">
+                        ({friend.email})
+                      </span>
+                    </span>
+                  </label>
+                ))
+              ) : (
+                <p className="friend-split-empty">
+                  No friends available to split with.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? (

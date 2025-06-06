@@ -8,15 +8,26 @@ const useStore = create((set, get) => {
   return {
     user: storedUser || null,
     balance: balanceAmount || null,
+    friends: null,
+    pendingRequests: null,
 
     setUser: (userData) => {
       set({ user: userData });
       localStorage.setItem("user", JSON.stringify(userData));
     },
 
-    setBalance : (data) => {
+    setBalance: (data) => {
       set({ balance: data });
-      localStorage.setItem("balance", Number(data))
+      localStorage.setItem("balance", Number(data));
+    },
+    fetchFriendsData: async () => {
+      try {
+        const res = await API.get("/friend/me");
+        set({ pendingRequests: res.data.friendRequests });
+        set({ friends: res.data.friends });
+      } catch (err) {
+        toast.error("Failed to load friend data");
+      }
     },
 
     logoutUser: (msg) => {
@@ -30,16 +41,16 @@ const useStore = create((set, get) => {
     },
 
     updateUser: async (data) => {
-      try{
-        await API.post('/user', data).then((res)=>{
-          const { setUser} = get();
+      try {
+        await API.post("/user", data).then((res) => {
+          const { setUser } = get();
           setUser(res.data.user);
-          toast.success(res.data.message || "Profile updated successfully.")
-        })
-      } catch(err){
-        toast.error(err.message)
+          toast.success(res.data.message || "Profile updated successfully.");
+        });
+      } catch (err) {
+        toast.error(err.message);
       }
-    }
+    },
   };
 });
 

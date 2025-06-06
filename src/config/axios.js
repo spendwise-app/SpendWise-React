@@ -3,9 +3,12 @@ import { store } from "../store/zustand";
 
 
 const API = axios.create({
-    baseURL: "https://spendwise-web.onrender.com/api",
+    baseURL: "http://localhost:5000/api",
     withCredentials: true
 })
+
+// baseURL: "https://spendwise-web.onrender.com/api",
+
 
 API.interceptors.response.use(
   (response) => response,

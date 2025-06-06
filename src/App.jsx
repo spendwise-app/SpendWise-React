@@ -10,6 +10,9 @@ import Profile from "./pages/Profile/Profile";
 import History from "./pages/History/History";
 import NotFound from "./pages/NotFound/NotFound";
 import NetworkStatus from "./component/NetworkStatus/NetworkStatus";
+import BorrowLend from "./pages/BorrowLend/BorrowLend";
+import Friends from "./pages/Friends/Friends";
+import SharedExpenses from "./pages/SharedExpense/SharedExpense";
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
         <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
+        <Route path="/borrowlend" element={<ProtectedRoute><BorrowLend /></ProtectedRoute>} />
+        <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
+        <Route path="/shared" element={<ProtectedRoute><SharedExpenses /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer autoClose={1500} />

@@ -66,6 +66,18 @@ const Header = () => {
               <span className="material-symbols-outlined">person</span>
               Profile
             </NavLink>
+            <NavLink to="/friends" className="nav-link">
+              <span className="material-symbols-outlined">group</span>
+              Friends
+            </NavLink>
+            <NavLink to="/shared" className="nav-link">
+              <span className="material-symbols-outlined">communication</span>
+              Shared
+            </NavLink>
+            <NavLink to="/borrowlend" className="nav-link">
+              <span className="material-symbols-outlined">money_bag</span>
+              Borrow/Lend
+            </NavLink>
             <button onClick={()=>logoutUser(null)} className="nav-link logout">
               <span className="material-symbols-outlined">logout</span>
               Logout

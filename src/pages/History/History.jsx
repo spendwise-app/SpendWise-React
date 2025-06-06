@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./history.css";
 import useExpense from "../../store/useExpense";
-import categories from "../../utilities/categories";
 import BackHeader from "../../component/BackHeader/BackHeader";
 import useStore from "../../store/zustand";
 
 const History = () => {
   const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState(null)
   const [filters, setFilters] = useState({
     category: "",
     startDate: "",
@@ -17,7 +17,7 @@ const History = () => {
     groupByCategory: false,
     sortBy: "",
     order: "desc",
-    dateFilterType: "range", // 'range' or 'single'
+    dateFilterType: "single",
   });
   const [total, setTotal] = useState(0);
   const [grouped, setGrouped] = useState(null);
@@ -29,7 +29,6 @@ const History = () => {
     setIsLoading(true);
     const query = new URLSearchParams();
 
-    // Only include date params based on selected filter type
     const dateParams =
       filters.dateFilterType === "single"
         ? { date: filters.date }
@@ -37,7 +36,6 @@ const History = () => {
 
     Object.entries({ ...filters, ...dateParams }).forEach(([key, value]) => {
       if (value !== "" && value !== false && key !== "dateFilterType") {
-        // Don't include the other date type's fields
         if (
           (filters.dateFilterType === "single" &&
             (key === "startDate" || key === "endDate")) ||
@@ -49,7 +47,7 @@ const History = () => {
       }
     });
 
-    await filterExpense(query, setExpenses, setTotal, setGrouped, setIsLoading);
+    await filterExpense(query, setExpenses, setTotal, setGrouped, setIsLoading, setCategories);
   };
 
   useEffect(() => {
