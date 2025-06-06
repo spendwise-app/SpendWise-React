@@ -3,10 +3,12 @@ import API from "../../config/axios";
 import { toast } from "react-toastify";
 import BackHeader from "../../component/BackHeader/BackHeader";
 import "./sharedExpense.css";
+import useStore from "../../store/zustand";
 
 const SharedExpenses = () => {
   const [sharedExpenses, setSharedExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {user} = useStore();
 
   const fetchSharedExpenses = async () => {
     try {
@@ -19,10 +21,15 @@ const SharedExpenses = () => {
     }
   };
 
-  const handleMarkPaid = async (expenseId) => {
+  const handleMarkPaid = async (expense) => {
     try {
-      await API.post(`/expenses/mark-paid/${expenseId}`);
-      toast.success("Marked as paid");
+      await API.post(`/friend/inbox/send/${expense.user}`,{
+          name: user?.name,
+          amount: expense.sharedWith[0].amount,
+          title: expense.title,
+          id: expense._id
+      });
+      toast.success("Mark as message sent");
       fetchSharedExpenses();
     } catch (err) {
       toast.error("Failed to mark as paid");
@@ -91,7 +98,7 @@ const SharedExpenses = () => {
                     )}
                     <button
                       className="payment-button mark-paid-button"
-                      onClick={() => handleMarkPaid(expense._id)}
+                      onClick={() => handleMarkPaid(expense)}
                     >
                       Mark as Paid
                     </button>

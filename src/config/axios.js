@@ -3,7 +3,7 @@ import { store } from "../store/zustand";
 
 
 const API = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: "https://spendwise-web.onrender.com/api",
     withCredentials: true
 })
 
