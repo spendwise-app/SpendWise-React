@@ -51,7 +51,7 @@ const SharedExpenses = () => {
           </div>
         ) : sharedExpenses.length === 0 ? (
           <div className="empty-state">
-            <img src="/images/no-expenses.svg" alt="No expenses" />
+            <span className="material-symbols-outlined no_exp">broken_image</span>
             <p>No shared expenses found</p>
           </div>
         ) : (

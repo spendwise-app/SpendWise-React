@@ -30,11 +30,9 @@ const BorrowLend = () => {
     setIsLoading(true);
     try {
       if (editId) {
-        // Update existing entry
         const res = await API.put(`/borrowlend/${editId}`, formData);
         toast.success(res.data.message);
       } else {
-        // Create new entry
         const res = await API.post("/borrowlend", formData);
         toast.success(res.data.message);
       }
@@ -54,16 +52,14 @@ const BorrowLend = () => {
     }
   };
 
-  const handleEdit = (entry) => {
-    setFormData({
-      type: entry.type,
-      person: entry.person,
-      amount: entry.amount,
-      note: entry.note,
-      status: entry.status,
-    });
-    setEditId(entry._id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleSettle = async (id) => {
+    try {
+      await API.put(`/borrowlend/${id}`, { status: "settled" });
+      toast.success("Marked as settled");
+      fetchEntries();
+    } catch (err) {
+      toast.error("Failed to update status");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -163,7 +159,7 @@ const BorrowLend = () => {
                 setFormData({ ...formData, note: e.target.value })
               }
               rows="3"
-              style={{resize:"vertical"}}
+              style={{ resize: "vertical" }}
             />
           </div>
 
@@ -207,16 +203,10 @@ const BorrowLend = () => {
                   </h4>
                   <div className="entry-actions">
                     <button
-                      onClick={() => handleEdit(entry)}
-                      className="edit-btn"
-                    >
-                      <span className="material-symbols-outlined">edit</span>
-                    </button>
-                    <button
                       onClick={() => handleDelete(entry._id)}
                       className="delete-btn"
                     >
-                    <span className="material-symbols-outlined">delete</span>
+                      <span className="material-symbols-outlined">delete</span>
                     </button>
                   </div>
                 </div>
@@ -241,6 +231,15 @@ const BorrowLend = () => {
                   <div className="entry-date">
                     {new Date(entry.createdAt).toLocaleString()}
                   </div>
+
+                  {entry.status === "pending" && (
+                    <button
+                      className="settle-btn"
+                      onClick={() => handleSettle(entry._id)}
+                    >
+                      Mark as Settled
+                    </button>
+                  )}
                 </div>
               </div>
             ))

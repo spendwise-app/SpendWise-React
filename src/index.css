@@ -48,5 +48,6 @@ input:not([type="email"]):not([type="password"]) {
 
 #root{
   background: transparent;
+  padding-bottom: 2rem;
 }
 
