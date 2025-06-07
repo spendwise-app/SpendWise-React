@@ -11,6 +11,7 @@ const FriendRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showInbox, setShowInbox] = useState(false);
   const [inbox, setInbox] = useState([]);
+  const [load,  setLoad] = useState(false);
   const inboxRef = useRef();
 
   const sendRequest = async (e) => {
@@ -78,6 +79,7 @@ const FriendRequest = () => {
 
   const acceptRequest = async (expense) => {
     try {
+      setLoad(true);
       const response = await API.post(`/expenses/accept/${expense.id}`, {
         friend: expense.friend,
       });
@@ -90,11 +92,14 @@ const FriendRequest = () => {
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
       return false;
+    } finally {
+      setLoad(false)
     }
   };
   const rejectRequest = async (expenseId) => {
     try {
-      const response = await API.post(`/expenses/accept/${expenseId}`);
+      setLoad(true);
+      const response = await API.post(`/expenses/reject/${expenseId}`);
       if (response.data.success) {
         toast.success(res.data.message);
         getInboxMessages();
@@ -104,6 +109,8 @@ const FriendRequest = () => {
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
       return false;
+    } finally {
+      setLoad(false)
     }
   };
 
@@ -145,6 +152,7 @@ const FriendRequest = () => {
                     <div className="btns">
                       <button
                         onClick={() => acceptRequest(item)}
+                        disabled={load}
                         className="yes"
                       >
                         <span className="material-symbols-outlined">
@@ -153,6 +161,7 @@ const FriendRequest = () => {
                       </button>
                       <button
                         onClick={() => rejectRequest(item.id)}
+                        disabled={load}
                         className="no"
                       >
                         <span className="material-symbols-outlined">
