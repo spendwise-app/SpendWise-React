@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useStore();
+  const { setUser, setToken } = useStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,6 +19,7 @@ const Login = () => {
     try {
       const res = await API.post("/auth/login", { email, password });
       setUser(res.data.user);
+      setToken(res.data.token);
       if(res.data.success){
         toast.success(res.data.message || "Login successful");
       }else{

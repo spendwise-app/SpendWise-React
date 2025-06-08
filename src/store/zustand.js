@@ -5,11 +5,18 @@ import { toast } from "react-toastify";
 const useStore = create((set, get) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const balanceAmount = localStorage.getItem("balance");
+  const userToken = JSON.parse(localStorage.getItem("token"));
   return {
     user: storedUser || null,
     balance: balanceAmount || null,
     friends: null,
     pendingRequests: null,
+    token: userToken,
+
+    setToken: (token)=>{
+      set({ token: token });
+      localStorage.setItem("token", JSON.stringify(token));
+    },
 
     setUser: (userData) => {
       set({ user: userData });
