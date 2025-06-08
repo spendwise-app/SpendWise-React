@@ -82,6 +82,7 @@ const FriendRequest = () => {
       setLoad(true);
       const response = await API.post(`/expenses/accept/${expense.id}`, {
         friend: expense.friend,
+        amount: expense.amount
       });
       if (response.data.success) {
         toast.success("Payment accepted successfully!");

@@ -19,7 +19,7 @@ const DashBoard = () => {
   const fetchUserData = async () => {
     await API.get("/user").then((res)=>{
       setUser(res.data.user)
-    })
+    }).catch(err => console.error(`error: ${err.message}`))
   } 
   return (
     <div className="dashboard">
