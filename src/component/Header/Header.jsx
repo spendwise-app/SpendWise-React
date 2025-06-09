@@ -10,6 +10,8 @@ const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const menuRef = useRef();
   const menuIconRef = useRef();
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
   useEffect(() => {
     document.addEventListener("click", documentClick);
 
@@ -24,6 +26,37 @@ const Header = () => {
       !menuIconRef.current.contains(e.target)
     ) {
       setShowProfileMenu(false);
+    }
+  };
+
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
+
+   const handleDownloadClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+      });
+    } else {
+      alert("App is not installable yet.");
     }
   };
 
@@ -79,10 +112,46 @@ const Header = () => {
               <span className="material-symbols-outlined">money_bag</span>
               Borrow/Lend
             </NavLink>
-            <button onClick={()=>logoutUser(null)} className="nav-link logout">
+            <button
+              onClick={() => logoutUser(null)}
+              className="nav-link logout"
+            >
               <span className="material-symbols-outlined">logout</span>
               Logout
             </button>
+
+            { deferredPrompt && (
+              <button
+              onClick={handleDownloadClick}
+              style={{
+                display: "flex",
+                height: "30px",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px",
+                padding: "0 12px",
+                backgroundColor: "#10b981",
+                color: "white",
+                border: "none",
+                borderRadius: "12px",
+                fontSize: "14px",
+                cursor: "pointer",
+                fontFamily: "Arial, sans-serif",
+              }}
+            >
+              <span>Install App</span>
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: "18px",
+                  lineHeight: "1",
+                }}
+              >
+                download
+              </span>
+            </button>
+            )}
           </div>
         )}
         <Inbox />

@@ -25,15 +25,15 @@
 
 .inbox-icon .payment-requests {
   position: absolute;
-  top: 3.4rem;
+  top: 4rem;
   right: 0;
-  max-width: 500px;
-  min-width: 350px;
+  width: clamp(300px, 95vw, 500px);
   height: auto;
   background: var(--primary-color);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 0.5rem;
+  border: 1px solid #ffffff61;
 }
 
 .payment-requests p {

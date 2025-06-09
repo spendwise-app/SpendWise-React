@@ -14,6 +14,8 @@ const AddExpense = () => {
   const [shared, setShared] = useState(false);
   const { addExpense } = useExpense();
   const { user, friends } = useStore();
+  const [splitMode, setSplitMode] = useState("equal");
+  const [customSplit, setCustomSplit] = useState({});
 
   const handleCheckboxChange = (friendId) => {
     setSharedWith((prev) =>
@@ -30,15 +32,31 @@ const AddExpense = () => {
     }
 
     const totalAmount = parseFloat(amount);
-    const splitAmount =
-      sharedWith.length > 0
-        ? totalAmount / (sharedWith.length + 1)
-        : totalAmount;
+    let sharedWithData = [];
 
-    const sharedWithData = sharedWith.map((friendId) => ({
-      friend: friendId,
-      amount: Math.ceil(splitAmount),
-    }));
+    if (sharedWith.length > 0) {
+      if (splitMode === "equal") {
+        const splitAmount = totalAmount / (sharedWith.length + 1);
+        sharedWithData = sharedWith.map((friendId) => ({
+          friend: friendId,
+          amount: Math.ceil(splitAmount),
+        }));
+      } else {
+        const customTotal = Object.values(customSplit).reduce(
+          (a, b) => a + b,
+          0
+        );
+        if (customTotal > totalAmount) {
+          setIsLoading(false);
+          return toast.error("Custom split exceeds total amount.");
+        }
+
+        sharedWithData = sharedWith.map((friendId) => ({
+          friend: friendId,
+          amount: Math.ceil(customSplit[friendId] || 0),
+        }));
+      }
+    }
 
     setIsLoading(true);
 
@@ -71,7 +89,9 @@ const AddExpense = () => {
 
       <form className="expense-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Expense Title <span className="optional">(optional)</span></label>
+          <label htmlFor="title">
+            Expense Title <span className="optional">(optional)</span>
+          </label>
           <input
             id="title"
             type="text"
@@ -123,7 +143,6 @@ const AddExpense = () => {
         <div className="share-toggle-container">
           <label htmlFor="sharetofriend" className="share-toggle-label">
             Share with friends
-          
           </label>
           <input
             id="sharetofriend"
@@ -133,29 +152,75 @@ const AddExpense = () => {
             checked={shared}
             hidden
           />
-            <span onClick={() => setShared((prev) => !prev)} className="slide"></span>
+          <span
+            onClick={() => setShared((prev) => !prev)}
+            className="slide"
+          ></span>
         </div>
+
+        {shared && (
+          <div className="split-mode-toggle">
+            <label>
+              <input
+                type="radio"
+                value="equal"
+                checked={splitMode === "equal"}
+                onChange={() => setSplitMode("equal")}
+              />
+              Split Equally
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="custom"
+                checked={splitMode === "custom"}
+                onChange={() => setSplitMode("custom")}
+              />
+              Split Custom
+            </label>
+          </div>
+        )}
         {shared && (
           <div className="friend-split-container">
             <label className="friend-split-title">Split with Friends</label>
             <div className="friend-split-list">
               {friends?.length > 0 ? (
-                friends?.map((friend) => (
-                  <label key={friend._id} className="friend-split-option">
-                    <input
-                      type="checkbox"
-                      className="friend-split-checkbox"
-                      checked={sharedWith.includes(friend._id)}
-                      onChange={() => handleCheckboxChange(friend._id)}
-                    />
-                    <span className="friend-split-info">
-                      {friend.name}{" "}
-                      <span className="friend-split-email">
-                        ({friend.email})
-                      </span>
-                    </span>
-                  </label>
-                ))
+                friends?.map((friend) => {
+                  const isSelected = sharedWith.includes(friend._id);
+                  return (
+                    <div key={friend._id} className="friend-split-option">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => handleCheckboxChange(friend._id)}
+                        />
+                        <span className="friend-split-info">
+                          {friend.name}{" "}
+                          <span className="friend-split-email">
+                            ({friend.email})
+                          </span>
+                        </span>
+                      </label>
+
+                      {splitMode === "custom" && isSelected && (
+                        <input
+                          type="number"
+                          placeholder="Amount"
+                          min="0"
+                          className="custom-amount-input"
+                          value={customSplit[friend._id] || ""}
+                          onChange={(e) =>
+                            setCustomSplit((prev) => ({
+                              ...prev,
+                              [friend._id]: parseFloat(e.target.value) || 0,
+                            }))
+                          }
+                        />
+                      )}
+                    </div>
+                  );
+                })
               ) : (
                 <p className="friend-split-empty">
                   No friends available to split with.

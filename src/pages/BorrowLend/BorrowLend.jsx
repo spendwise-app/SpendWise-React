@@ -146,6 +146,7 @@ const BorrowLend = () => {
               onChange={(e) =>
                 setFormData({ ...formData, amount: e.target.value })
               }
+              min={0}
               required
             />
           </div>

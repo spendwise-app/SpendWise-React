@@ -59,7 +59,7 @@
   font-size: 1.25rem;
 }
 
-.badge {
+.badge-f {
   background-color: var(--white);
   color: var(--primary-color);
   border-radius: 50%;

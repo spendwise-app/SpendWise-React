@@ -67,6 +67,7 @@ const Inbox = () => {
       <span
         onClick={() => setShowInbox(prev => !prev)}
         className="material-symbols-outlined"
+        tabIndex={1}
       >
         mail
       </span>

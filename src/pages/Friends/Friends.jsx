@@ -93,7 +93,7 @@ const FriendRequest = () => {
             <h3 className="section-title">
               <span>Pending Requests</span>
               {pendingRequests?.length > 0 && (
-                <span className="badge">{pendingRequests?.length}</span>
+                <span className="badge-f">{pendingRequests?.length}</span>
               )}
             </h3>
             {pendingRequests?.length === 0 ? (
@@ -155,7 +155,7 @@ const FriendRequest = () => {
             <h3 className="section-title">
               <span>Your Friends</span>
               {friends?.length > 0 && (
-                <span className="badge">{friends?.length}</span>
+                <span className="badge-f">{friends?.length}</span>
               )}
             </h3>
             {friends?.length === 0 ? (

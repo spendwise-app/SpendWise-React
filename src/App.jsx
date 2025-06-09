@@ -18,15 +18,78 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
-        <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-        <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
-        <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
-        <Route path="/borrowlend" element={<ProtectedRoute><BorrowLend /></ProtectedRoute>} />
-        <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
-        <Route path="/shared" element={<ProtectedRoute><SharedExpenses /></ProtectedRoute>} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashBoard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <GuestRoute>
+              <Register />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <GuestRoute>
+              <ForgotPassword />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <History />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/borrowlend"
+          element={
+            <ProtectedRoute>
+              <BorrowLend />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <ProtectedRoute>
+              <Friends />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/shared"
+          element={
+            <ProtectedRoute>
+              <SharedExpenses />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer autoClose={1500} />
