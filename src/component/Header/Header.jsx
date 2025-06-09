@@ -3,6 +3,7 @@ import useStore from "../../store/zustand";
 import "./header.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import Inbox from "../Inbox/Inbox";
 
 const Header = () => {
   const { user, logoutUser } = useStore();
@@ -84,6 +85,7 @@ const Header = () => {
             </button>
           </div>
         )}
+        <Inbox />
       </div>
     </header>
   );

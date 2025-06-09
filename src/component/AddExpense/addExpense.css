@@ -8,6 +8,10 @@
   overflow: hidden;
 }
 
+.optional {
+  color: var(--text-light);
+}
+
 .card-header {
   padding: 1.5rem;
   background-color: var(--white);

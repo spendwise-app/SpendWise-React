@@ -78,7 +78,8 @@
 
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1.5fr 0.8fr;
+  grid-template-columns: 1fr 2fr 1fr 1.5fr 0.8fr 0.5fr;
+  justify-items: center;
   padding: 1rem 2rem;
   background-color: #f9fafb;
   font-weight: 600;
@@ -93,7 +94,8 @@
 
 .table-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1.5fr 0.8fr;
+  grid-template-columns: 1fr 2fr 1fr 1.5fr 0.8fr 0.5fr;
+  justify-items: center;
   padding: 1rem 2rem;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
@@ -102,6 +104,10 @@
 
 .table-row:hover {
   background-color: #f9fafb;
+}
+
+.sharedWith {
+  background: ;
 }
 
 .table-row.editing {
@@ -160,7 +166,7 @@
 .category-tag.home-maintenance { background: #fef2f2; color: #dc2626; }
 .category-tag.childcare { background: #fefce8; color: #eab308; }
 .category-tag.taxes { background: #fef2f2; color: #7f1d1d; }
-.category-tag.other { background: #f9fafb; color: #4b5563; }
+.category-tag.others { background: #f9fafb; color: #4b5563; }
 
 .title-cell {
   font-weight: 500;
@@ -312,8 +318,9 @@
   
   .table-row {
     grid-template-columns: 1fr;
+    justify-items: stretch;
     gap: 0.5rem;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 1rem 2rem 1rem;
     position: relative;
   }
   
@@ -324,7 +331,8 @@
   .category-cell,
   .title-cell,
   .amount-cell,
-  .date-cell {
+  .date-cell,
+  .sharedWith {
     display: flex;
     justify-content: space-between;
   }
@@ -352,10 +360,16 @@
     font-weight: 600;
     color: var(--text-color);
   }
+
+  .sharedWith::before {
+    content: "Shared:";
+    font-weight: 600;
+    color: var(--text-color);
+  }
   
   .actions-cell {
     position: absolute;
-    bottom: -0.3rem;
+    bottom: 0;
     right: 0.5rem;
   }
   .actions-cell span {

@@ -8,6 +8,7 @@ import useStore from "../../store/zustand";
 const SharedExpenses = () => {
   const [sharedExpenses, setSharedExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(false);
   const {user} = useStore();
 
   const fetchSharedExpenses = async () => {
@@ -23,6 +24,7 @@ const SharedExpenses = () => {
 
   const handleMarkPaid = async (expense) => {
     try {
+      setLoad(true);
       await API.post(`/friend/inbox/send/${expense.user}`,{
           name: user?.name,
           amount: expense.sharedWith[0].amount,
@@ -33,6 +35,8 @@ const SharedExpenses = () => {
       fetchSharedExpenses();
     } catch (err) {
       toast.error("Failed to mark as paid");
+    } finally{
+        setLoad(false);
     }
   };
 
@@ -45,7 +49,7 @@ const SharedExpenses = () => {
       <BackHeader title="Shared Expenses" to="/" />
       <div className="shared-expense-container">
         {loading ? (
-          <div className="loading-state">
+          <div className="loading-state-s">
             <div className="loading-spinner"></div>
             <p>Loading shared expenses...</p>
           </div>
@@ -58,7 +62,7 @@ const SharedExpenses = () => {
           <div className="shared-expense-grid">
             {sharedExpenses.map((expense) => (
               <div key={expense._id} className="shared-expense-card">
-                <div className="expense-header">
+                <div className="expense-header-s">
                   <h3 className="expense-title">{expense.title}</h3>
                   <span className={`expense-status ${expense.sharedWith[0].paid ? 'paid' : 'pending'}`}>
                     {expense.sharedWith[0].paid ? 'Paid' : 'Pending'}
@@ -99,6 +103,7 @@ const SharedExpenses = () => {
                     <button
                       className="payment-button mark-paid-button"
                       onClick={() => handleMarkPaid(expense)}
+                      disabled={load}
                     >
                       Mark as Paid
                     </button>

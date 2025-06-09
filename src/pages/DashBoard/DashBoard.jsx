@@ -9,7 +9,7 @@ import useStore from "../../store/zustand";
 
 const DashBoard = () => {
 
-  const { setUser, fetchFriendsData, friends  } = useStore()
+  const { setUser, fetchFriendsData, friends } = useStore()
 
   useEffect(()=>{
     fetchUserData();

@@ -12,8 +12,18 @@ const useStore = create((set, get) => {
     friends: null,
     pendingRequests: null,
     token: userToken,
+    inbox: null,
 
-    setToken: (token)=>{
+    setInbox: async () => {
+      try {
+        const res = await API.get(`/friend/inbox/get`);
+        set({ inbox: res.data.inbox });
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
+
+    setToken: (token) => {
       set({ token: token });
       localStorage.setItem("token", JSON.stringify(token));
     },

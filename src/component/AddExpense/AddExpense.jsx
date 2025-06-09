@@ -8,7 +8,7 @@ import useStore from "../../store/zustand";
 const AddExpense = () => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("others");
   const [isLoading, setIsLoading] = useState(false);
   const [sharedWith, setSharedWith] = useState([]);
   const [shared, setShared] = useState(false);
@@ -25,8 +25,8 @@ const AddExpense = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !amount || !category) {
-      return toast.error("All fields are required");
+    if (!amount) {
+      return toast.error("Amount field is required");
     }
 
     const totalAmount = parseFloat(amount);
@@ -41,6 +41,7 @@ const AddExpense = () => {
     }));
 
     setIsLoading(true);
+
     try {
       await addExpense({
         title,
@@ -70,14 +71,13 @@ const AddExpense = () => {
 
       <form className="expense-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Expense Title</label>
+          <label htmlFor="title">Expense Title <span className="optional">(optional)</span></label>
           <input
             id="title"
             type="text"
             placeholder="Dinner with friends"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            required
           />
         </div>
 
@@ -105,7 +105,6 @@ const AddExpense = () => {
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              required
             >
               <option value="">Select a category</option>
               {categories?.map((cat) => (
@@ -141,7 +140,7 @@ const AddExpense = () => {
             <label className="friend-split-title">Split with Friends</label>
             <div className="friend-split-list">
               {friends?.length > 0 ? (
-                friends.map((friend) => (
+                friends?.map((friend) => (
                   <label key={friend._id} className="friend-split-option">
                     <input
                       type="checkbox"

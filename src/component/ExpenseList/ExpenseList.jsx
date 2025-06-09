@@ -99,6 +99,7 @@ const ExpenseList = () => {
             <span>Description</span>
             <span>Amount</span>
             <span>Date</span>
+            <span>Shared</span>
             <span>Actions</span>
           </div>
 
@@ -147,7 +148,7 @@ const ExpenseList = () => {
                   <>
                     <span className="category-cell">
                       <span
-                        className={`category-tag ${exp.category.toLowerCase()}`}
+                        className={`category-tag ${exp.category}`}
                       >
                         {exp.category}
                       </span>
@@ -158,6 +159,9 @@ const ExpenseList = () => {
                       {exp.amount}
                     </span>
                     <span className="date-cell">{formatDate(exp.date)}</span>
+                    <div className="sharedWith">
+                      { exp.sharedWith.length == 0 ? <span className="material-symbols-outlined">person</span> : <span className="material-symbols-outlined">group</span> }
+                    </div>
                     <span className="actions-cell">
                       <button
                         className="icon-btn edit-btn"

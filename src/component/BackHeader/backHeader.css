@@ -1,11 +1,18 @@
 .back-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
   background: var(--white);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
+}
+
+.back-header .back-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .back-button {
