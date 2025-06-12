@@ -13,6 +13,7 @@ import NetworkStatus from "./component/NetworkStatus/NetworkStatus";
 import BorrowLend from "./pages/BorrowLend/BorrowLend";
 import Friends from "./pages/Friends/Friends";
 import SharedExpenses from "./pages/SharedExpense/SharedExpense";
+import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 
 const App = () => {
   return (
@@ -87,6 +88,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <SharedExpenses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <AnalyticsPage />
             </ProtectedRoute>
           }
         />

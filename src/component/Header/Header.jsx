@@ -93,7 +93,7 @@ const Header = () => {
         {showProfileMenu && (
           <div className="profile-menu" ref={menuRef}>
             <NavLink to="/history" className="nav-link">
-              <span className="material-symbols-outlined">monitoring</span>
+              <span className="material-symbols-outlined">history_toggle_off</span>
               History
             </NavLink>
             <NavLink to="/profile" className="nav-link">
@@ -111,6 +111,10 @@ const Header = () => {
             <NavLink to="/borrowlend" className="nav-link">
               <span className="material-symbols-outlined">money_bag</span>
               Borrow/Lend
+            </NavLink>
+            <NavLink to="/analytics" className="nav-link">
+              <span className="material-symbols-outlined">bar_chart</span>
+              Analytics
             </NavLink>
             <button
               onClick={() => logoutUser(null)}

@@ -135,6 +135,10 @@
   margin-top: 1rem;
 }
 
+.expense-actions .qrcode {
+  flex: 1;
+}
+
 .payment-button {
   display: flex;
   justify-content: center;
@@ -165,11 +169,13 @@
   background-color: var(--background);
   color: var(--text-color);
   border: 1px solid var(--border-color);
+  align-self: center;
 }
 
 .mark-paid-button:hover {
   background-color: var(--border-color);
 }
+
 
 @media (max-width: 768px) {
   .shared-expense-grid {
